@@ -1,3 +1,4 @@
+import { Currency } from '@/components/Currency'
 import { FETCH_INTERVAL } from '@/constants/general'
 import { useAutoFetchCurrencies } from '@/hooks/useAutoFetchCurrencies'
 import { globalStyles as gs } from '@/styles/globalStyles'
@@ -11,7 +12,6 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
-import { Currency } from './components/Currency'
 
 export default function HomeScreen() {
 	const { currencies, isError, isLoading, lastUpdated } =
