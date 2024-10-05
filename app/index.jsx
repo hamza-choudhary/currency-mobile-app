@@ -1,5 +1,7 @@
 import { Currency } from '@/components/Currency'
+import { colors } from '@/constants/colors'
 import { FETCH_INTERVAL } from '@/constants/general'
+import { formatDateTime } from '@/helpers/dateTime'
 import { useAutoFetchCurrencies } from '@/hooks/useAutoFetchCurrencies'
 import { globalStyles as gs } from '@/styles/globalStyles'
 import Icon from '@expo/vector-icons/FontAwesome5'
@@ -37,11 +39,14 @@ export default function HomeScreen() {
 			<View style={styles.container}>
 				<View>
 					<Text style={gs.labelLarge}>Last Updated</Text>
-					<Text style={{fontSize: 14}}>Last Updated</Text>
-					<Text style={gs.bodyLarge}>{lastUpdated}</Text>
+					<Text style={[gs.bodyLarge, { color: colors.textLight }]}>
+						{formatDateTime(lastUpdated)}
+					</Text>
 				</View>
 				<View style={styles.options}>
-					<Text style={gs.titleLarge}>Currencies</Text>
+					<Text style={[gs.titleLarge, { color: colors.primary }]}>
+						Currencies
+					</Text>
 					<TouchableOpacity style={styles.button} onPress={toggleSort}>
 						<Icon
 							name={
@@ -50,9 +55,9 @@ export default function HomeScreen() {
 									: 'sort-amount-up-alt'
 							}
 							size={20}
-							color="black"
+							color={colors.primary}
 						/>
-						<Text style={gs.defaultText}>{sortOrder}</Text>
+						<Text style={[gs.defaultText, styles.buttonText]}>{sortOrder}</Text>
 					</TouchableOpacity>
 				</View>
 				<View style={[styles.shadow, gs.flex1]}>
@@ -70,8 +75,14 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-	screen: { backgroundColor: '#fdfeff', flex: 1 },
-	container: { flex: 1, paddingHorizontal: 10, paddingVertical: 20, gap: 10 },
+	screen: { backgroundColor: colors.primary, flex: 1 },
+	container: {
+		flex: 1,
+		paddingHorizontal: 10,
+		paddingVertical: 20,
+		gap: 10,
+		backgroundColor: colors.background,
+	},
 	options: {
 		justifyContent: 'space-between',
 		alignItems: 'center',
@@ -81,13 +92,14 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		gap: 6,
 		alignItems: 'center',
-		borderRadius: 50,
-		borderColor: '#000',
+		borderRadius: 10,
+		borderColor: colors.primary,
 		borderWidth: 1,
 		paddingVertical: 8,
 		paddingHorizontal: 12,
 	},
-	listContainer: { backgroundColor: '#fff', borderRadius: 10, flex: 1 },
+	buttonText: { textTransform: 'capitalize', color: colors.primary },
+	listContainer: { backgroundColor: colors.white, borderRadius: 10, flex: 1 },
 	shadow: {
 		shadowColor: 'black',
 		shadowOffset: {

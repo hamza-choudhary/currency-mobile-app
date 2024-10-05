@@ -1,3 +1,4 @@
+import { colors } from '@/constants/colors'
 import { globalStyles as gs } from '@/styles/globalStyles'
 import { StyleSheet, Text, View } from 'react-native'
 
@@ -8,7 +9,12 @@ export function Currency({ item }) {
 			<View style={gs.flexRow}>
 				<View style={gs.flex1}>
 					<Text style={gs.labelMedium}>Name</Text>
-					<Text style={gs.bodyLarge}>{`${name} (${code})`}</Text>
+					<Text style={gs.bodyLarge}>
+						{name}
+						<Text
+							style={[gs.bodySmall, { color: colors.textLight }]}
+						>{` (${code})`}</Text>
+					</Text>
 				</View>
 				<View style={styles.rate}>
 					<Text style={gs.labelMedium}>Rate</Text>
@@ -18,7 +24,9 @@ export function Currency({ item }) {
 			<View style={gs.flexRow}>
 				<View style={gs.flex1}>
 					<Text style={gs.labelMedium}>Date</Text>
-					<Text style={gs.bodyMedium}>{date}</Text>
+					<Text style={[gs.bodyMedium, { color: colors.textLight }]}>
+						{date}
+					</Text>
 				</View>
 			</View>
 			<View style={styles.hr} />
@@ -29,5 +37,5 @@ export function Currency({ item }) {
 const styles = StyleSheet.create({
 	rate: { flex: 0.5 },
 	container: { padding: 10, gap: 10 },
-	hr: { borderBottomWidth: 1, borderBottomColor: '#e8ecf5' },
+	hr: { borderBottomWidth: 1, borderBottomColor: colors.secondaryLight },
 })
