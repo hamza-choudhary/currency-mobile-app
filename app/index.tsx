@@ -30,6 +30,8 @@ export default function HomeScreen() {
 		setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'))
 	}
 
+	//TODO: handle errors and loading state
+
 	return (
 		<SafeAreaView style={styles.screen}>
 			<View style={styles.container}>
@@ -52,20 +54,22 @@ export default function HomeScreen() {
 						<Text style={gs.defaultText}>{sortOrder}</Text>
 					</TouchableOpacity>
 				</View>
-				<FlatList
-					data={sortedCurrencies}
-					keyExtractor={(item) => item.code}
-					renderItem={({ item }) => <Currency item={item} />}
-					style={styles.listContainer}
-					showsVerticalScrollIndicator={false}
-				/>
+				<View style={[styles.shadow, gs.flex1]}>
+					<FlatList
+						data={sortedCurrencies}
+						keyExtractor={(item) => item.code}
+						renderItem={({ item }) => <Currency item={item} />}
+						style={styles.listContainer}
+						showsVerticalScrollIndicator={false}
+					/>
+				</View>
 			</View>
 		</SafeAreaView>
 	)
 }
 
 const styles = StyleSheet.create({
-	screen: { backgroundColor: '#e8ecf5', flex: 1 },
+	screen: { backgroundColor: '#fdfeff', flex: 1 },
 	container: { flex: 1, paddingHorizontal: 10, paddingVertical: 20, gap: 10 },
 	options: {
 		justifyContent: 'space-between',
@@ -83,4 +87,14 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 	},
 	listContainer: { backgroundColor: '#fff', borderRadius: 10, flex: 1 },
+	shadow: {
+		shadowColor: 'black',
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.3,
+		shadowRadius: 2,
+		elevation: 14,
+	},
 })
