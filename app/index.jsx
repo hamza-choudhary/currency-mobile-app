@@ -114,10 +114,7 @@ const styles = StyleSheet.create({
 	listContainer: { backgroundColor: colors.white, flex: 1, borderRadius: 10 },
 	shadow: {
 		shadowColor: 'black',
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
+		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.3,
 		shadowRadius: 2,
 		elevation: 5,
