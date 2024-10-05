@@ -1,4 +1,5 @@
 import { Currency } from '@/components/Currency'
+import { NoDataFound } from '@/components/NoDataFound'
 import { colors } from '@/constants/colors'
 import { FETCH_INTERVAL } from '@/constants/general'
 import { formatDateTime } from '@/helpers/dateTime'
@@ -21,7 +22,7 @@ export default function HomeScreen() {
 
 	const [sortOrder, setSortOrder] = useState('asc')
 
-	const sortedCurrencies = useMemo(() => {
+	const data = useMemo(() => {
 		if (!currencies) return []
 		return [...currencies].sort((a, b) =>
 			sortOrder === 'asc' ? a.rate - b.rate : b.rate - a.rate
@@ -62,11 +63,12 @@ export default function HomeScreen() {
 				</View>
 				<View style={[styles.shadow, gs.flex1]}>
 					<FlatList
-						data={sortedCurrencies}
+						data={data}
 						keyExtractor={(item) => item.code}
 						renderItem={({ item }) => <Currency item={item} />}
-						style={styles.listContainer}
+						style={data.length > 0 && styles.listContainer}
 						showsVerticalScrollIndicator={false}
+						ListEmptyComponent={!isLoading && <NoDataFound />}
 					/>
 				</View>
 			</View>
