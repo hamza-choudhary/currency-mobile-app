@@ -1,7 +1,9 @@
 import { Currency } from '@/components/Currency'
+import { ErrorContainer } from '@/components/ErrorContainer'
 import { NoDataFound } from '@/components/NoDataFound'
 import { colors } from '@/constants/colors'
 import { FETCH_INTERVAL } from '@/constants/general'
+import { MESSAGES } from '@/constants/messages'
 import { formatDateTime } from '@/helpers/dateTime'
 import { useAutoFetchCurrencies } from '@/hooks/useAutoFetchCurrencies'
 import { globalStyles as gs } from '@/styles/globalStyles'
@@ -34,6 +36,10 @@ export default function HomeScreen() {
 	}
 
 	//TODO: handle errors and loading state
+
+	if (!isLoading && isError) {
+		return <ErrorContainer message={MESSAGES.INTERNET_ERROR} />
+	}
 
 	return (
 		<SafeAreaView style={styles.screen}>
