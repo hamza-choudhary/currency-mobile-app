@@ -3,14 +3,9 @@ import { MESSAGES } from '@/constants/messages'
 import { useCurrencyStore } from '@/store/currencyStore'
 import { globalStyles as gs } from '@/styles/globalStyles'
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
-import {
-	ActivityIndicator,
-	SafeAreaView,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { LoadingSpinner } from './LoadingSpinner'
 
 export function ErrorContainer({ message = '' }) {
 	const messageValue = message || MESSAGES.API_ERROR
@@ -33,9 +28,7 @@ export function ErrorContainer({ message = '' }) {
 				<View style={gs.flexRow}>
 					<TouchableOpacity style={styles.button} onPress={fetchCurrencies}>
 						<Text style={[gs.bodyMedium, styles.buttonText]}>Try Again</Text>
-						{isLoading && (
-							<ActivityIndicator size="small" color={colors.white} />
-						)}
+						<LoadingSpinner isLoading={isLoading} color={colors.white} />
 					</TouchableOpacity>
 				</View>
 			</View>

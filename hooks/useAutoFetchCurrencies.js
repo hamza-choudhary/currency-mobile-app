@@ -12,6 +12,7 @@ export function useAutoFetchCurrencies({ intervalTime = 10000 }) {
 	} = useCurrencyStore((state) => state)
 
 	useEffect(() => {
+		fetchCurrencies()
 		loadStoredData()
 	}, [])
 

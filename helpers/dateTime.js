@@ -1,4 +1,7 @@
 export function formatDateTime(dateString) {
+	if (!dateString) {
+		return null
+	}
 	const date = new Date(dateString)
 
 	const options = {

@@ -1,5 +1,6 @@
 import { Currency } from '@/components/Currency'
 import { ErrorContainer } from '@/components/ErrorContainer'
+import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { NoDataFound } from '@/components/NoDataFound'
 import { colors } from '@/constants/colors'
 import { FETCH_INTERVAL } from '@/constants/general'
@@ -11,16 +12,17 @@ import Icon from '@expo/vector-icons/FontAwesome5'
 import { useMemo, useState } from 'react'
 import {
 	FlatList,
-	SafeAreaView,
+	StatusBar,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
 	View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function HomeScreen() {
 	const { currencies, isError, isLoading, lastUpdated } =
-		useAutoFetchCurrencies({ intervalTime: FETCH_INTERVAL * 50 })
+		useAutoFetchCurrencies({ intervalTime: FETCH_INTERVAL })
 
 	const [sortOrder, setSortOrder] = useState('asc')
 
@@ -35,19 +37,18 @@ export default function HomeScreen() {
 		setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'))
 	}
 
-	//TODO: handle errors and loading state
-
 	if (!isLoading && isError) {
 		return <ErrorContainer message={MESSAGES.INTERNET_ERROR} />
 	}
 
 	return (
 		<SafeAreaView style={styles.screen}>
+			<StatusBar barStyle="light-content" />
 			<View style={styles.container}>
 				<View>
 					<Text style={gs.labelLarge}>Last Updated</Text>
 					<Text style={[gs.bodyLarge, { color: colors.textLight }]}>
-						{formatDateTime(lastUpdated)}
+						{formatDateTime(lastUpdated) || 'N/A'}
 					</Text>
 				</View>
 				<View style={styles.options}>
@@ -74,6 +75,9 @@ export default function HomeScreen() {
 						renderItem={({ item }) => <Currency item={item} />}
 						style={data.length > 0 && styles.listContainer}
 						showsVerticalScrollIndicator={false}
+						ListHeaderComponent={
+							data.length === 0 && <LoadingSpinner isLoading={isLoading} />
+						}
 						ListEmptyComponent={!isLoading && <NoDataFound />}
 					/>
 				</View>
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 	},
 	buttonText: { textTransform: 'capitalize', color: colors.primary },
-	listContainer: { backgroundColor: colors.white, borderRadius: 10, flex: 1 },
+	listContainer: { backgroundColor: colors.white, flex: 1, borderRadius: 10 },
 	shadow: {
 		shadowColor: 'black',
 		shadowOffset: {
@@ -116,6 +120,8 @@ const styles = StyleSheet.create({
 		},
 		shadowOpacity: 0.3,
 		shadowRadius: 2,
-		elevation: 14,
+		elevation: 5,
+		backgroundColor: colors.white,
+		borderRadius: 10,
 	},
 })
