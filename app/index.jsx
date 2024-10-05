@@ -37,6 +37,7 @@ export default function HomeScreen() {
 			<View style={styles.container}>
 				<View>
 					<Text style={gs.labelLarge}>Last Updated</Text>
+					<Text style={{fontSize: 14}}>Last Updated</Text>
 					<Text style={gs.bodyLarge}>{lastUpdated}</Text>
 				</View>
 				<View style={styles.options}>
